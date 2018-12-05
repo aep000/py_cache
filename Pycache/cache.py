@@ -1,4 +1,5 @@
 from redis_cache import redis_cache
+from simple_cache import simple_cache
 class Cache:
     available_modes={
     "basic": 1,
@@ -52,3 +53,28 @@ class Cache:
                 return self.cache.cache(key,func,timeout, *args, **kwargs)
             return function_wrapper
         return wrapperContainer
+
+class Flask_Cache(Cache):
+    def __init__(self,app,mode="basic",config={}):
+        Cache.__init__(self,mode,config)
+        from flask import request
+
+    def cache_route(timeout=None):
+        def meta(func):
+            @cache_custom_key(request.full_path,timeout)
+            def wrapper(*args, **kwargs):
+                return func(*args, **kwargs)
+            return wrapper
+        return meta
+
+    def cache_route_with_args(argNames=[],timeout=None):
+        def meta(func):
+            key =""
+            for arg in argNames:
+                if arg in request.args:
+                    key+=arg+"="+request.args[arg]
+            @cache_custom_key(request.full_path+key,timeout)
+            def wrapper(*args,**kwargs):
+                return func(*args,**kwargs)
+            return wrapper
+        return meta

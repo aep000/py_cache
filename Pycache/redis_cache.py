@@ -6,7 +6,6 @@ class redis_cache:
         print key
         out = self.r.get(key)
         if out == None:
-            print "did not cache"
             out = func(*args, **kwargs)
             self.r.set(key,out,ex=timeout)
         return out
