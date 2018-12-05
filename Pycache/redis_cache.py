@@ -3,6 +3,7 @@ class redis_cache:
         self.r = config["redis"]
 
     def cache(self,key,func, timeout, *args, **kwargs):
+        print key
         out = self.r.get(key)
         if out == None:
             print "did not cache"

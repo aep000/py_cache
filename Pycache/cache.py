@@ -21,7 +21,7 @@ class Cache:
             out += str(key) + str(name)
         return func.__name__()+out
 
-    #probably shouldnt do this but it works for some things well
+    #probably shouldnt do this but it works for some things
     def cache_simple(self,timeout=None):
         #TODO add none redis cache timeout
         def wrapperContainer(func):
@@ -34,6 +34,21 @@ class Cache:
         #TODO add none redis cache timeout
         def wrapperContainer(func):
             def function_wrapper(*args, **kwargs):
+                return self.cache.cache(key,func,timeout, *args, **kwargs)
+            return function_wrapper
+        return wrapperContainer
+
+    #allow to pass custom keygen function?
+    def cache_on_args(self,arguments=[],keyargs=[],timeout=None):
+        #TODO add none redis cache timeout
+        def wrapperContainer(func):
+            def function_wrapper(*args, **kwargs):
+                print func
+                key = func.__name__
+                for arg in arguments:
+                    key+=str(args[arg])+","
+                for k in keyargs:
+                    key+=str(k)+"="+kwargs[k]
                 return self.cache.cache(key,func,timeout, *args, **kwargs)
             return function_wrapper
         return wrapperContainer
