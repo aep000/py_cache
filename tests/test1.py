@@ -1,4 +1,4 @@
-from pycache import Cache
+from pycache import Cache, Flask_Cache
 import redis
 
 r = redis.Redis(host='localhost', port=6379)
