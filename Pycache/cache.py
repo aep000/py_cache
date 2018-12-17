@@ -58,22 +58,23 @@ class Flask_Cache(Cache):
     def __init__(self,app,mode="basic",config={}):
         Cache.__init__(self,mode,config)
         from flask import request
+	self.request = request
+	self.app = app
 
-    def cache_route(timeout=None):
+    def cache_route(self,timeout=None):
         def meta(func):
-            @cache_custom_key(request.full_path,timeout)
             def wrapper(*args, **kwargs):
-                return func(*args, **kwargs)
+                return self.cache.cache(self.request.full_path,func,timeout, *args, **kwargs)
             return wrapper
         return meta
 
-    def cache_route_with_args(argNames=[],timeout=None):
+    def cache_route_with_args(self,argNames=[],timeout=None):
         def meta(func):
             key =""
             for arg in argNames:
                 if arg in request.args:
                     key+=arg+"="+request.args[arg]
-            @cache_custom_key(request.full_path+key,timeout)
+            @cache_custom_key(self.request.full_path+key,timeout)
             def wrapper(*args,**kwargs):
                 return func(*args,**kwargs)
             return wrapper
