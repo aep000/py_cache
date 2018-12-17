@@ -1,13 +1,13 @@
 from redis_cache import redis_cache
 from simple_cache import simple_cache
 class Cache:
-    available_modes={
+    available_drivers={
     "basic": 1,
     "redis": 2,
 
     }
     def __init__(self,mode="basic",config={}):
-        self.mode = self.available_modes[mode]
+        self.mode = self.available_drivers[mode]
         self.config = config
         if(self.mode == 1):
             self.cache = simple_cache(config)
