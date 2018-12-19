@@ -1,0 +1,16 @@
+Metadata-Version: 2.1
+Name: pycache
+Version: 1.0
+Summary: Extensible General Purpose caching package
+Home-page: https://github.com/aep000/py_cache
+Author: aep000
+Author-email: alexparson1@gmail.com
+License: UNKNOWN
+Description: # py_cache
+        Caching package for all types of things
+        
+        
+        
+Keywords: caching flask redis cache
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
