@@ -1,4 +1,2 @@
 # py_cache
-Caching package for all types of things
-
-
+Extensible general purpose caching package
