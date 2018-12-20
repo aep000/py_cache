@@ -1,5 +1,4 @@
-from redis_cache import redis_cache
-from simple_cache import simple_cache
+from mechanism import redis_cache, simple_cache
 class Cache:
     available_drivers={
     "basic": 1,
